@@ -36,6 +36,7 @@
             <EditText
                 android:id="@+id/points"
                 android:hint="Pontos"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.TextInputLayout>

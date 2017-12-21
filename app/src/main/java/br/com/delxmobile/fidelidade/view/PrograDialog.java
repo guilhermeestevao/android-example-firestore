@@ -8,8 +8,11 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+
 import br.com.delxmobile.fidelidade.R;
 import br.com.delxmobile.fidelidade.model.Program;
+import br.com.delxmobile.fidelidade.sync.ProgramSync;
 
 /**
  * Created by Guilherme on 21/12/2017.
@@ -17,6 +20,7 @@ import br.com.delxmobile.fidelidade.model.Program;
 public class PrograDialog extends DialogFragment {
 
     private Program mItem;
+    private ProgramSync sync;
 
     public static PrograDialog newInstance(Program item) {
         Bundle args = new Bundle();
@@ -39,14 +43,20 @@ public class PrograDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater i = getActivity().getLayoutInflater();
         View v = i.inflate(R.layout.fragment_dialog_program,null);
-
+        sync = ProgramSync.getInstance(getActivity());
+        final EditText name = v.findViewById(R.id.name);
+        final EditText description = v.findViewById(R.id.description);
+        final EditText poinsts = v.findViewById(R.id.points);
 
         AlertDialog.Builder dialog =  new  AlertDialog.Builder(getActivity())
 
                 .setPositiveButton(getString(R.string.ok),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-
+                                mItem.name = name.getText().toString();
+                                mItem.points = Integer.parseInt(poinsts.getText().toString());
+                                mItem.description = description.getText().toString();
+                                sync.save(mItem);
                             }
                         }
                 )

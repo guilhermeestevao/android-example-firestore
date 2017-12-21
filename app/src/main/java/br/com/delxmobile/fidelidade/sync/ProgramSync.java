@@ -3,6 +3,7 @@ package br.com.delxmobile.fidelidade.sync;
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.delxmobile.fidelidade.db.DatabaseOpenHelper;
@@ -26,7 +27,7 @@ public class ProgramSync {
         repository = new ProgramRepository(DatabaseOpenHelper.getInstance(context));
     }
 
-    public ProgramSync getInstance(Context context){
+    public static ProgramSync getInstance(Context context){
         if(instance == null)
             instance = new ProgramSync(context);
 
@@ -35,6 +36,7 @@ public class ProgramSync {
 
     public void save(Program program){
         if(program.id == 0){
+            program.updatedAt = new Date().getTime();
             repository.add(program);
         }
     }
