@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Fidelidade</string>
+    <string name="action_settings">Settings</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">deletar</string>
+</resources>
