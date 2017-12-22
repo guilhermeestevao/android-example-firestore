@@ -8,11 +8,11 @@
     tools:context="br.com.delxmobile.fidelidade.view.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <android.support.v7.widget.RecyclerView
+    <ListView
         android:id="@+id/programs"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+    </ListView>
 
 </android.support.constraint.ConstraintLayout>

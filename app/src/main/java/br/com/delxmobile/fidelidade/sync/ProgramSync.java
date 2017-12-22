@@ -2,6 +2,7 @@ package br.com.delxmobile.fidelidade.sync;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.Date;
 import java.util.List;
@@ -37,7 +38,8 @@ public class ProgramSync {
     public void save(Program program){
         if(program.id == 0){
             program.updatedAt = new Date().getTime();
-            repository.add(program);
+            Program add = repository.add(program);
+            Log.d("", "");
         }
     }
 

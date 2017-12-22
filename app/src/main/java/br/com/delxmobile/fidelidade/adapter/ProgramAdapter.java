@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -45,10 +46,17 @@ public class ProgramAdapter extends BaseAdapter {
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View v = inflater.inflate(R.layout.item_program);
+        View v = inflater.inflate(R.layout.item_program, null);
 
+        TextView name = v.findViewById(R.id.name);
+        TextView points = v.findViewById(R.id.points);
 
-        return null;
+        Program program = mList.get(position);
+
+        name.setText(program.name);
+        points.setText(String.valueOf(program.points));
+
+        return v;
     }
 
 

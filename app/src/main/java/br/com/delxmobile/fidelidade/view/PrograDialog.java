@@ -1,6 +1,8 @@
 package br.com.delxmobile.fidelidade.view;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +23,13 @@ public class PrograDialog extends DialogFragment {
 
     private Program mItem;
     private ProgramSync sync;
+    private OnRefreshListener mListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mListener = (OnRefreshListener) activity;
+    }
 
     public static PrograDialog newInstance(Program item) {
         Bundle args = new Bundle();
@@ -57,6 +66,7 @@ public class PrograDialog extends DialogFragment {
                                 mItem.points = Integer.parseInt(poinsts.getText().toString());
                                 mItem.description = description.getText().toString();
                                 sync.save(mItem);
+                                mListener.update();
                             }
                         }
                 )
@@ -70,6 +80,10 @@ public class PrograDialog extends DialogFragment {
                 );
         dialog.setView(v);
         return dialog.create();
+    }
+
+    public interface OnRefreshListener{
+        void update();
     }
 
 }

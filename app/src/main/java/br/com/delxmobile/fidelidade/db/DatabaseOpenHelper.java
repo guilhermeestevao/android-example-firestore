@@ -13,7 +13,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     protected static final String TAG = "DB_DEBUG";
     private static DatabaseOpenHelper sInstance;
 
-    public static final String DATABASE_NAME = "tabatas";
+    public static final String DATABASE_NAME = "fidelidade";
     protected static final int DATABASE_VERSION = 1;
 
     @Override
