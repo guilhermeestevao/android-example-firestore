@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "949415627835",
+    "firebase_url": "https://fidelidadeprogram.firebaseio.com",
+    "project_id": "fidelidadeprogram",
+    "storage_bucket": "fidelidadeprogram.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949415627835:android:cc09f852a7332fb3",
+        "android_client_info": {
+          "package_name": "br.com.delxmobile.fidelidade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949415627835-9ea15adrng2tk08irt3e8l6of52j83ko.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.delxmobile.fidelidade",
+            "certificate_hash": "d05f4a72e8e8d19f645a4bf7d80ae00370b6bc44"
+          }
+        },
+        {
+          "client_id": "949415627835-scai84pr77tt7ttud3lddourkfeape2f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZFZzLmUq2FpBapEd_LRyIjRA40U13TyM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949415627835-scai84pr77tt7ttud3lddourkfeape2f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

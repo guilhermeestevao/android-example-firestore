@@ -12,6 +12,7 @@ import br.com.delxmobile.fidelidade.db.repositories.ProgramRepository;
 import br.com.delxmobile.fidelidade.db.sql.FindAllObjects;
 import br.com.delxmobile.fidelidade.db.tables.ProgramTable;
 import br.com.delxmobile.fidelidade.model.Program;
+import br.com.delxmobile.fidelidade.model.User;
 
 /**
  * Created by Guilherme on 21/12/2017.
@@ -37,18 +38,25 @@ public class ProgramSync {
 
     public void save(Program program){
         if(program.id == 0){
+            User user = UserSync.getInstance(context).getLoggedUser();
             program.updatedAt = new Date().getTime();
+            program.userId = user.id;
+            program.userOid = user.oId;
+            program.active = true;
             Program add = repository.add(program);
             Log.d("", "");
         }
     }
 
     public void update(Program program){
+        program.updatedAt = new Date().getTime();
         repository.update(program);
     }
 
     public void delete(Program program){
-        repository.remove(program);
+        program.active = false;
+        program.updatedAt = new Date().getTime();
+        repository.update(program);
     }
 
     public List<Program> getPrograms(){

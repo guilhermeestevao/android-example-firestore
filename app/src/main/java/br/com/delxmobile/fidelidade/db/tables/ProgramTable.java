@@ -14,6 +14,7 @@ public class ProgramTable {
         public static final String DESCRIPTION = "description";
         public static final String POINTS = "points";
         public static final String OID = "oid";
+        public static final String ACTIVE = "active";
         public static final String UPDATED_AT = "updated_at";
         public static final String USER_ID = "user_id";
         public static final String USER_OID = "user_oid";

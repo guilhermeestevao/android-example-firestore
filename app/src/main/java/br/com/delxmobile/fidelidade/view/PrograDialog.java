@@ -39,7 +39,6 @@ public class PrograDialog extends DialogFragment {
         return fragment;
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,24 +56,38 @@ public class PrograDialog extends DialogFragment {
         final EditText description = v.findViewById(R.id.description);
         final EditText poinsts = v.findViewById(R.id.points);
 
+        if(mItem != null && mItem.id != 0){
+            name.setText(mItem.name);
+            description.setText(mItem.description);
+            poinsts.setText(String.valueOf(mItem.points));
+        }
+
         AlertDialog.Builder dialog =  new  AlertDialog.Builder(getActivity())
 
-                .setPositiveButton(getString(R.string.ok),
+                .setPositiveButton("Salvar",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 mItem.name = name.getText().toString();
                                 mItem.points = Integer.parseInt(poinsts.getText().toString());
                                 mItem.description = description.getText().toString();
-                                sync.save(mItem);
+
+                                if(mItem.id ==0)
+                                    sync.save(mItem);
+                                else
+                                    sync.update(mItem);
+
                                 mListener.update();
                             }
                         }
                 )
-                .setNeutralButton(getString(R.string.cancel), null)
+                .setNeutralButton("Fechar", null)
                 .setNegativeButton(getString(R.string.delete),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-
+                                if(mItem.id != 0){
+                                    sync.delete(mItem);
+                                    mListener.update();
+                                }
                             }
                         }
                 );

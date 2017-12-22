@@ -15,5 +15,6 @@ public class UserTable {
         public static final String PHOTO = "photo";
         public static final String UPDATED_AT = "updated_at";
         public static final String OID = "oid";
+        public static final String ACTIVE = "active";
     }
 }

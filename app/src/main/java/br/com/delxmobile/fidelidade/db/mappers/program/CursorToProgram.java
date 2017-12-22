@@ -19,6 +19,7 @@ public class CursorToProgram implements Mapper<Cursor, Program> {
         program.description = cursor.getString(cursor.getColumnIndex(ProgramTable.Fields.DESCRIPTION));
         program.points = cursor.getLong(cursor.getColumnIndex(ProgramTable.Fields.POINTS));
         program.oId = cursor.getString(cursor.getColumnIndex(ProgramTable.Fields.OID));
+        program.active = cursor.getInt(cursor.getColumnIndex(ProgramTable.Fields.ACTIVE)) == 1 ? true : false;
         program.updatedAt = cursor.getLong(cursor.getColumnIndex(ProgramTable.Fields.UPDATED_AT));
         program.userId = cursor.getLong(cursor.getColumnIndex(ProgramTable.Fields.USER_ID));
         program.userOid = cursor.getString(cursor.getColumnIndex(ProgramTable.Fields.USER_OID));

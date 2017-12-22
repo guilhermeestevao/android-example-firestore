@@ -16,7 +16,7 @@ public class FindObjectByOid implements SqlSpecification {
     @Override
     public String toSqlQuery() {
         return String.format(
-                "SELECT * FROM %1$s WHERE id = %2$s;",
+                "SELECT * FROM %1$s WHERE oid = \"%2$s\";",
                 mTable, mOid
         );
     }

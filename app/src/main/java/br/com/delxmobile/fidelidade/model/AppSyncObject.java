@@ -9,6 +9,7 @@ public class AppSyncObject implements Serializable{
 
     public long id;
     public String oId;
+    public boolean active;
     public long updatedAt;
 
 }

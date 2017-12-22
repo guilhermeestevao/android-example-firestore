@@ -10,8 +10,12 @@ import java.util.ArrayList;
 import br.com.delxmobile.fidelidade.db.mappers.Mapper;
 import br.com.delxmobile.fidelidade.db.mappers.user.CursorToUser;
 import br.com.delxmobile.fidelidade.db.mappers.user.UserToContentValues;
+import br.com.delxmobile.fidelidade.db.sql.FindObjectById;
+import br.com.delxmobile.fidelidade.db.sql.FindObjectByOid;
 import br.com.delxmobile.fidelidade.db.sql.SqlSpecification;
+import br.com.delxmobile.fidelidade.db.tables.ProgramTable;
 import br.com.delxmobile.fidelidade.db.tables.UserTable;
+import br.com.delxmobile.fidelidade.model.Program;
 import br.com.delxmobile.fidelidade.model.User;
 
 /**
@@ -68,12 +72,36 @@ public class UserRepository implements Repository<User> {
 
     @Override
     public User findById(long id) {
-        return null;
+        final SQLiteDatabase database = openHelper.getReadableDatabase();
+        User user = null;
+
+        try {
+            final Cursor cursor = database.rawQuery(new FindObjectById(UserTable.TABLE_NAME, id).toSqlQuery(), new String[]{});
+            if(cursor.moveToFirst())
+                user = converterCursor.map(cursor);
+
+            cursor.close();
+            return user;
+        } finally {
+            database.close();
+        }
     }
 
     @Override
     public User findByOid(String oid) {
-        return null;
+        final SQLiteDatabase database = openHelper.getReadableDatabase();
+        User user = null;
+
+        try {
+            final Cursor cursor = database.rawQuery(new FindObjectByOid(UserTable.TABLE_NAME, oid).toSqlQuery(), new String[]{});
+            if(cursor.moveToFirst())
+                user = converterCursor.map(cursor);
+
+            cursor.close();
+            return user;
+        } finally {
+            database.close();
+        }
     }
 
     @Override
