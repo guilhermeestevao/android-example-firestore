@@ -11,9 +11,11 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import br.com.delxmobile.fidelidade.R;
 import br.com.delxmobile.fidelidade.model.Program;
+import br.com.delxmobile.fidelidade.service.ServiceListener;
 import br.com.delxmobile.fidelidade.sync.ProgramSync;
 
 /**
@@ -71,10 +73,11 @@ public class PrograDialog extends DialogFragment {
                                 mItem.points = Integer.parseInt(poinsts.getText().toString());
                                 mItem.description = description.getText().toString();
 
-                                if(mItem.id ==0)
-                                    sync.save(mItem);
-                                else
+                                if(mItem.id ==0) {
+                                    sync.save(mItem, null);
+                                }else {
                                     sync.update(mItem);
+                                }
 
                                 mListener.update();
                             }

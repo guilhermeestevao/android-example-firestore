@@ -4,10 +4,15 @@ import android.content.Context;
 import android.util.Log;
 
 import java.util.Date;
+import java.util.Map;
 
 import br.com.delxmobile.fidelidade.db.DatabaseOpenHelper;
+import br.com.delxmobile.fidelidade.db.mappers.Mapper;
 import br.com.delxmobile.fidelidade.db.repositories.UserRepository;
 import br.com.delxmobile.fidelidade.model.User;
+import br.com.delxmobile.fidelidade.service.ServiceListener;
+import br.com.delxmobile.fidelidade.service.firestore.UserService;
+import br.com.delxmobile.fidelidade.service.mappers.user.UserToMap;
 import br.com.delxmobile.fidelidade.util.UserPreference;
 
 /**
@@ -19,10 +24,14 @@ public class UserSync {
     private static UserSync instance;
     private Context context;
     private UserRepository repository;
+    private UserService service;
+    private Mapper<User, Map<String, Object>> userToMap;
 
     private UserSync(Context context){
         this.context = context;
         repository = new UserRepository(DatabaseOpenHelper.getInstance(context));
+        service = UserService.getInstance(context);
+        userToMap = new UserToMap();
     }
 
     public static UserSync getInstance(Context context){
@@ -41,7 +50,21 @@ public class UserSync {
             user.updatedAt = new Date().getTime();
             user.active = true;
             User add = repository.add(user);
-            Log.d("", "");
+
+            Map<String, Object> map = userToMap.map(add);
+
+            service.save(map, new ServiceListener<Void>() {
+                @Override
+                public void onComplete(Void object) {
+
+                }
+
+                @Override
+                public void onError(String cause) {
+
+                }
+            });
+
         }else{
             //Chama o update aqui
         }

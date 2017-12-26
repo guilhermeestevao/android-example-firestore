@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -63,7 +64,7 @@ public class ProgramRepository implements Repository<Program> {
             String whereClause = ProgramTable.Fields.ID + "=?";
             String[] whereArgs = new String[] { String.valueOf(item.id) };
             final ContentValues contentValues = converterContentValues.map(item);
-            database.update(ProgramTable.TABLE_NAME, contentValues,  whereClause, whereArgs);
+            database.update(ProgramTable.TABLE_NAME, contentValues, whereClause, whereArgs);
             database.setTransactionSuccessful();
         } finally {
             database.endTransaction();

@@ -105,7 +105,8 @@ public class MainActivity extends AppCompatActivity implements PrograDialog.OnRe
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Program program = mPrograms.get(position);
+                long idProgram = mPrograms.get(position).id;
+                Program program = mSync.getProgramById(idProgram);
                 opemProgramDialog(program);
             }
         });
@@ -162,27 +163,22 @@ public class MainActivity extends AppCompatActivity implements PrograDialog.OnRe
     }
 
     private void configWihoutUser() {
-
         mName.setText("Nome");
         mEmail.setText("Email");
         mImage.setImageResource(R.drawable.account_circle);
         mLogout.setVisibility(View.GONE);
-
         mImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 singIn();
             }
         });
-
         mLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signOut();
             }
         });
-
-
     }
 
     @Override
@@ -271,6 +267,18 @@ public class MainActivity extends AppCompatActivity implements PrograDialog.OnRe
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+
+            mSync.sync(new ServiceListener<Void>() {
+                @Override
+                public void onComplete(Void object) {
+                    Toast.makeText(MainActivity.this, "Sincronização conluida", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(String cause) {
+
+                }
+            });
             return true;
         }
 
