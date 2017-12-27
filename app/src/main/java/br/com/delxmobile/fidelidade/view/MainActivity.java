@@ -267,16 +267,22 @@ public class MainActivity extends AppCompatActivity implements PrograDialog.OnRe
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-
+            dialog.setCancelable(false);
+            dialog.setTitle("Aguarde!");
+            dialog.setMessage("Sincronizando com o servidor");
+            dialog.show();
             mSync.sync(new ServiceListener<Void>() {
                 @Override
                 public void onComplete(Void object) {
+                    dialog.dismiss();
+                    update();
                     Toast.makeText(MainActivity.this, "Sincronização conluida", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onError(String cause) {
-
+                    dialog.dismiss();
+                    Toast.makeText(MainActivity.this, cause, Toast.LENGTH_SHORT).show();
                 }
             });
             return true;
@@ -293,6 +299,6 @@ public class MainActivity extends AppCompatActivity implements PrograDialog.OnRe
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Toast.makeText(this, connectionResult.getErrorMessage(), Toast.LENGTH_SHORT).show();
     }
 }

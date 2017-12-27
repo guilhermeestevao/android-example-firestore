@@ -76,7 +76,7 @@ public class PrograDialog extends DialogFragment {
                                 if(mItem.id ==0) {
                                     sync.save(mItem, null);
                                 }else {
-                                    sync.update(mItem);
+                                    sync.update(mItem, null);
                                 }
 
                                 mListener.update();
@@ -88,7 +88,7 @@ public class PrograDialog extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 if(mItem.id != 0){
-                                    sync.delete(mItem);
+                                    sync.delete(mItem, null);
                                     mListener.update();
                                 }
                             }

@@ -3,10 +3,16 @@ package br.com.delxmobile.fidelidade.service.firestore;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 import java.util.Map;
 import br.com.delxmobile.fidelidade.db.tables.ProgramTable;
 import br.com.delxmobile.fidelidade.service.ServiceListener;
@@ -83,6 +89,23 @@ public class ProgramService {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         listener.onError(e.getLocalizedMessage());
+                    }
+                });
+    }
+
+    public void getPrograms(String userOid, final ServiceListener<List<DocumentSnapshot>> listener){
+        db.collection(COLLECTION_PROGRAM)
+                .whereEqualTo("user_oid", userOid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot result = task.getResult();
+                            listener.onComplete(result.getDocuments());
+                        } else {
+                            listener.onError(task.getException().getLocalizedMessage());
+                        }
                     }
                 });
     }
