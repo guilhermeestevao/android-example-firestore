@@ -232,13 +232,16 @@ public class ProgramSync {
         if(position < 0){
             listener.onComplete(null);
         }else{
-            Program program = allPrograms.get(position);
+            final Program program = allPrograms.get(position);
 
-            if(program.active){
+            if(program.oId != null){
 
-                save(program, new ServiceListener<Void>() {
+                service.getProgram(program.oId, new ServiceListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(Void object) {
+                    public void onComplete(DocumentSnapshot document) {
+                        if (!document.exists())
+                            delete(program, null);
+
                         next();
                     }
 
@@ -254,24 +257,49 @@ public class ProgramSync {
                 });
 
             }else{
-                delete(program, new ServiceListener<Void>() {
-                    @Override
-                    public void onComplete(Void object) {
-                        next();
-                    }
 
-                    @Override
-                    public void onError(String cause) {
-                        next();
-                    }
+                if(program.active){
 
-                    private void next(){
-                        int next = position - 1;
-                        saveAll(allPrograms, next, listener);
-                    }
-                });
+                    save(program, new ServiceListener<Void>() {
+                        @Override
+                        public void onComplete(Void object) {
+                            next();
+                        }
+
+                        @Override
+                        public void onError(String cause) {
+                            next();
+                        }
+
+                        private void next(){
+                            int next = position - 1;
+                            saveAll(allPrograms, next, listener);
+                        }
+                    });
+
+                }else{
+                    delete(program, new ServiceListener<Void>() {
+                        @Override
+                        public void onComplete(Void object) {
+                            next();
+                        }
+
+                        @Override
+                        public void onError(String cause) {
+                            next();
+                        }
+
+                        private void next(){
+                            int next = position - 1;
+                            saveAll(allPrograms, next, listener);
+                        }
+                    });
+
+                }
+
 
             }
+
 
 
         }
@@ -303,7 +331,7 @@ public class ProgramSync {
                     }
                     private void next(){
                         int next = position - 1;
-                        saveAll(allPrograms, next, listener);
+                        updateAll(allPrograms, next, listener);
                     }
                 });
             }else{
@@ -324,7 +352,7 @@ public class ProgramSync {
 
                         private void next(){
                             int next = position - 1;
-                            saveAll(allPrograms, next, listener);
+                            updateAll(allPrograms, next, listener);
                         }
                     });
                 }else if(program.updatedAt < found.updatedAt){
@@ -341,12 +369,12 @@ public class ProgramSync {
 
                         private void next(){
                             int next = position - 1;
-                            saveAll(allPrograms, next, listener);
+                            updateAll(allPrograms, next, listener);
                         }
                     });
                 }else{
                     int next = position - 1;
-                    saveAll(allPrograms, next, listener);
+                    updateAll(allPrograms, next, listener);
                 }
             }
 

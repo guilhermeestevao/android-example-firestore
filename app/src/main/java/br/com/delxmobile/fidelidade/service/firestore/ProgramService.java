@@ -93,6 +93,21 @@ public class ProgramService {
                 });
     }
 
+    public void getProgram(String oid, final ServiceListener<DocumentSnapshot> listener){
+        DocumentReference docRef = db.collection(COLLECTION_PROGRAM).document(oid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    listener.onComplete(document);
+                } else {
+                    listener.onError(task.getException().getLocalizedMessage());
+                }
+            }
+        });
+    }
+
     public void getPrograms(String userOid, final ServiceListener<List<DocumentSnapshot>> listener){
         db.collection(COLLECTION_PROGRAM)
                 .whereEqualTo("user_oid", userOid)
